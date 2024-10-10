@@ -4,6 +4,8 @@ import {
   TouchableOpacity,
   View,
   Image,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -13,23 +15,30 @@ export default function ImagePreviewComponent({
   setText,
   setPhotoUri,
 }) {
+
+  function dismissKeyboard() {
+    Keyboard.dismiss();
+  }
+
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => setPhotoUri(null)}
-        style={styles.closeButton}
-      >
-        <View style={styles.glassCircle} />
-        <Ionicons name="close-outline" size={28} color="white" />
-      </TouchableOpacity>
-      <Image source={{ uri: photoUri }} style={styles.imagePreview} />
-      <TextInput
-        style={styles.captionInput}
-        placeholder="Add a caption..."
-        value={text}
-        onChangeText={setText}
-      />
-    </View>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => setPhotoUri(null)}
+          style={styles.closeButton}
+        >
+          <View style={styles.glassCircle} />
+          <Ionicons name="close-outline" size={28} color="white" />
+        </TouchableOpacity>
+        <Image source={{ uri: photoUri }} style={styles.imagePreview} />
+        <TextInput
+          style={styles.captionInput}
+          placeholder="Add a caption..."
+          value={text}
+          onChangeText={setText}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -61,8 +70,8 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 50,
     paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    // borderWidth: 1,
+    // borderColor: "#ccc",
     borderRadius: 25,
     backgroundColor: "black",
     color: "white",

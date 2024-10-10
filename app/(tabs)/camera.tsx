@@ -18,7 +18,6 @@ export default function App() {
   const [photoUri, setPhotoUri] = useState(null);
   const [text, setText] = useState("");
   const [imageUri, setImageUri] = useState(null);
-  const [facing, setFacing] = useState<CameraType>("back");
 
   useEffect(() => {
     (async () => {
@@ -55,9 +54,6 @@ export default function App() {
     }
   }
 
-  async function toggleCameraFacing() {
-    setFacing((current: any) => (current === "back" ? "front" : "back"));
-  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -67,12 +63,12 @@ export default function App() {
       />
       <View style={styles.container}>
         {photoUri ? (
-          <ImagePreviewComponent
-            photoUri={photoUri}
-            text={text}
-            setText={setText}
-            setPhotoUri={setPhotoUri}
-          />
+            <ImagePreviewComponent
+              photoUri={photoUri}
+              text={text}
+              setText={setText}
+              setPhotoUri={setPhotoUri}
+            />
         ) : (
           <CameraComponent
             onPictureTaken={(uri: any) => {
