@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Alert, StyleSheet } from "react-native";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
 import ImagePreviewComponent from "@/components/camera/ImagePreviewComponent";
 import PermissionComponent from "@/components/camera/PermissionComponent";
+import { useFocusEffect } from "@react-navigation/native"; // Import useFocusEffect
 
 export default function App() {
   const [mediaLibraryPermission, setMediaLibraryPermission] = useState(null);
@@ -24,28 +25,30 @@ export default function App() {
     })();
   }, []);
 
-  // Open image picker immediately after permissions are granted
-  useEffect(() => {
-    const openImagePicker = async () => {
-      if (mediaLibraryPermission) {
-        const response = await ImagePicker.launchImageLibraryAsync({
-          mediaType: "photo",
-          includeBase64: false,
-          maxHeight: 2000,
-          maxWidth: 2000,
-        });
+  // Function to open image picker
+  const openImagePicker = async () => {
+    if (mediaLibraryPermission) {
+      const response = await ImagePicker.launchImageLibraryAsync({
+        mediaType: "photo",
+        includeBase64: false,
+        maxHeight: 2000,
+        maxWidth: 2000,
+      });
 
-        if (!response.canceled && response.uri) {
-          setPhotoUri(response.uri);
-          Alert.alert(response.uri);
-        }
+      if (!response.canceled && response.assets) {
+        setPhotoUri(response.assets[0].uri);
       }
-    };
-
-    if (mediaLibraryPermission !== null) {
-      openImagePicker();
     }
-  }, [mediaLibraryPermission]);
+  };
+
+  // Use focus effect to open image picker when component is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      if (mediaLibraryPermission !== null) {
+        openImagePicker();
+      }
+    }, [mediaLibraryPermission])
+  );
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -71,6 +74,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    // alignItems: "center",
   },
 });
