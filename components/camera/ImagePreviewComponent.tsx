@@ -6,6 +6,9 @@ import {
   Image,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -15,14 +18,17 @@ export default function ImagePreviewComponent({
   setText,
   setPhotoUri,
 }) {
-
   function dismissKeyboard() {
     Keyboard.dismiss();
   }
 
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={45}
+      >
         <TouchableOpacity
           onPress={() => setPhotoUri(null)}
           style={styles.closeButton}
@@ -31,13 +37,16 @@ export default function ImagePreviewComponent({
           <Ionicons name="close-outline" size={28} color="white" />
         </TouchableOpacity>
         <Image source={{ uri: photoUri }} style={styles.imagePreview} />
-        <TextInput
-          style={styles.captionInput}
-          placeholder="Add a caption..."
-          value={text}
-          onChangeText={setText}
-        />
-      </View>
+
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <TextInput
+            style={styles.captionInput}
+            placeholder="Add a caption..."
+            value={text}
+            onChangeText={setText}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }
@@ -63,18 +72,19 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
   },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "flex-end", // 確保 TextInput 在底部
+    paddingBottom: 20, // 給 TextInput 一些底部間距
+  },
   captionInput: {
-    position: "absolute",
-    bottom: 20,
-    left: "10%",
     width: "80%",
     height: 50,
     paddingHorizontal: 15,
-    // borderWidth: 1,
-    // borderColor: "#ccc",
     borderRadius: 25,
     backgroundColor: "black",
     color: "white",
+    alignSelf: "center", // 將 TextInput 居中
     zIndex: 10,
   },
   glassCircle: {
