@@ -22,12 +22,15 @@ export default function ImagePreviewComponent({
     Keyboard.dismiss();
   }
 
+  // Debugging the photoUri
+  console.log("Photo URI: ", photoUri);
+
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={45}
+        keyboardVerticalOffset={60}
       >
         <TouchableOpacity
           onPress={() => setPhotoUri(null)}

@@ -35,7 +35,7 @@ export default function CameraComponent({
           style={styles.touchableCircle}
         >
           <View style={styles.glassCircle} />
-          <Ionicons name="image-outline" size={28} color="white" />
+          <Ionicons name="image-outline" size={24} color="white" />
           {imageUri && (
             <Image source={{ uri: imageUri }} style={styles.image} />
           )}
@@ -52,7 +52,7 @@ export default function CameraComponent({
           style={styles.touchableCircle}
         >
           <View style={styles.glassCircle} />
-          <Ionicons name="refresh-outline" size={32} color="white" />
+          <Ionicons name="refresh-outline" size={24} color="white" />
         </TouchableOpacity>
       </View>
     </CameraView>
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
   },
   glassCircle: {
     position: "absolute",
-    width: 48,
-    height: 48,
+    width: 40,
+    height: 40,
     borderRadius: 40,
     backgroundColor: "rgba(30, 30, 30, 0.8)",
     borderColor: "rgba(255, 255, 255, 0)",

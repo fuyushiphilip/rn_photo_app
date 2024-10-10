@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  View,
-  SafeAreaView,
-  Alert,
-  StyleSheet,
-} from "react-native";
+import { View, SafeAreaView, Alert, StyleSheet } from "react-native";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
@@ -48,12 +43,13 @@ export default function App() {
         maxWidth: 2000,
       });
 
-      if (!response.cancelled && response.uri) {
-        setImageUri(response.uri);
+      if (!response.canceled && response.assets) {
+        // setImageUri(response.assets[0].uri);
+        setPhotoUri(response.assets[0].uri);
+        // console.log(response.assets[0].uri);
       }
     }
   }
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -63,12 +59,12 @@ export default function App() {
       />
       <View style={styles.container}>
         {photoUri ? (
-            <ImagePreviewComponent
-              photoUri={photoUri}
-              text={text}
-              setText={setText}
-              setPhotoUri={setPhotoUri}
-            />
+          <ImagePreviewComponent
+            photoUri={photoUri}
+            text={text}
+            setText={setText}
+            setPhotoUri={setPhotoUri}
+          />
         ) : (
           <CameraComponent
             onPictureTaken={(uri: any) => {
