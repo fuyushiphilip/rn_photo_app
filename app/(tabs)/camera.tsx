@@ -72,8 +72,8 @@ export default function App() {
               savePhoto(uri);
             }}
             imageUri={imageUri}
-            openImagePicker={openImagePicker}
-            // toggleCameraFacing={toggleCameraFacing}
+            openImagePicker={openImagePicker} 
+            // toggleCameraFacing ={toggleCameraFacing}   
           />
         )}
       </View>
