@@ -73,7 +73,7 @@ export default function App() {
             }}
             imageUri={imageUri}
             openImagePicker={openImagePicker} 
-            // toggleCameraFacing = {toggleCameraFacing}   
+            // toggleCameraFacing={toggleCameraFacing}   
           />
         )}
       </View>
