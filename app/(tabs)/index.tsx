@@ -147,7 +147,10 @@ async function registerForPushNotificationsAsync() {
           {notification && JSON.stringify(notification.request.content.data)}
         </Text>
       </View>
-
+      <Text>
+        Data:{" "}
+        {notification && JSON.stringify(notification.date)}
+      </Text>
       <Button
         title="Press to schedule a notification"
         onPress={async () => {
